@@ -39,6 +39,8 @@ helm version -c
 
 helm inspect chart .
 
+helm repo add marketcircle ${CHARTMUSEUM_URL} --username ${CHARTMUSEUM_USER} --password ${CHARTMUSEUM_PASSWORD}
+
 helm dependency update .
 
 helm package .
