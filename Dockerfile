@@ -18,6 +18,11 @@ RUN set -ex \
     && mv linux-amd64/helm /usr/local/bin/helm \
     && rm -rf linux-amd64 
 
+RUN set -ex \
+    && curl https://s3.ca-central-1.amazonaws.com/ca.marketcircle.zone/marketcircle_ca.crt -o marketcircle_ca.crt \
+    && cp marketcircle_ca.crt /usr/local/share/ca-certificates/marketcircle_ca.crt \
+    && update-ca-certificates
+
 RUN apk add --virtual .helm-build-deps git make \
     && helm plugin install https://github.com/chartmuseum/helm-push.git --version ${HELM_PLUGIN_PUSH_VERSION} \
     && apk del --purge .helm-build-deps
