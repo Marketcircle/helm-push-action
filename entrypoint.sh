@@ -45,4 +45,7 @@ helm dependency update .
 
 helm package .
 
-helm push ${CHART_FOLDER}*.tgz ${CHARTMUSEUM_URL} -u ${CHARTMUSEUM_USER} -p ${CHARTMUSEUM_PASSWORD} ${FORCE}
+CHART_NAME=$(helm inspect chart . | tail -4 | head -n 1 | awk '{print $2}')
+CHART_VERSION=$(helm inspect chart . | tail -2 | tr -d "\n" | awk '{print $2}')
+
+helm push ${CHART_FOLDER}${CHART_NAME}-${CHART_VERSION}.tgz ${CHARTMUSEUM_URL} -u ${CHARTMUSEUM_USER} -p ${CHARTMUSEUM_PASSWORD} ${FORCE}
